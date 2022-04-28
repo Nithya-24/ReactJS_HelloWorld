@@ -1,41 +1,47 @@
 import React from 'react';
 import './App.css';
-import logo from './assets/images/logo.png';
+import logo from './assets/images/logo.png'
+import Home from './Home.js';
+import About from './About.js';
+import { Switch, Link, Route } from "react-router-dom";
 
 class App extends React.Component {
   url="https://www.bridgelabz.com/"
-
   constructor() {
     super() 
     this.state = {
-     // title: 'Hello from Bridgelabz'
-     userName: '',
-     nameError: ''
+      //title: 'Hello from Bridgelabz',
+      userName: '',
+      nameError: ''
     }
   }
 
   /**
-   *  onclick Funciton
+   * onClick method is called when image is clicked
+   * here clicking is the event that we're checking
    */
   onClick = ($event) => {
     window.open(this.url,"_blank");
   }
 
-      onNameChange = (event) => {
-      const nameRegex = RegExp('^[A-Z]{1}[a-zA-Z\\s]{2,}$');
-      this.setState({ userName: event.target.value})
-      if(nameRegex.test(event.target.value)) {
-        this.setState({nameError: ''})
-      } else {
-        this.setState({nameError: 'Invalid'})
-      }
+  /**
+   * onChange event listener is used to invoke this func
+   * @param {*} event 
+   */
+  onNameChange = (event) => {
+    const nameRegex = RegExp('^[A-Z]{1}[a-zA-Z\\s]{2,}$');
+    this.setState({ userName: event.target.value})
+    if(nameRegex.test(event.target.value)) {
+      this.setState({nameError: ''})
+    } else {
+      this.setState({nameError: 'Invalid name.'})
     }
-  
-    render() {
-      return (
-        <div className="container">
-        <div className="main-container">
-        <div class="page-content">
+  }
+
+  render() {
+    return (
+      <div className="container">
+      <div class="page-content">
         <h1>Hello {this.state.userName} from BridgeLabz</h1>
         <img src={logo} onClick={this.onClick} 
             alt="BridgeLabz Logo goes here"/>
@@ -45,9 +51,9 @@ class App extends React.Component {
         </div>
         <p>At BridgeLabz, we are a tech community of</p>
         <ul>
-            <li>technologists</li>
-            <li>thinkers</li>
-            <li>builders</li>
+            <li>Technologists</li>
+            <li>Thinkers</li>
+            <li>Builders</li>
         </ul>
         <p>
             Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
@@ -56,13 +62,23 @@ class App extends React.Component {
             It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
         </p>
         <p>
-            To know about us, visit <a href = {this.url} onClick={this.onClick}>BridgeLabz </a> 
-            to learn even more about our misiion i.e. <strong>Employability to all</strong>.
+            To know about us, visit <a href = {this.url}>BridgeLabz </a> 
+            to learn even more about our mission i.e. <strong>Employability to all</strong>.
         </p>  
-      </div>
+        <li>
+          <Link to="/home">Home</Link>
+        </li>
+        <li>
+          <Link to="/about">About</Link>
+        </li>
+        <Switch>
+          <Route exact path="/home" component={Home}></Route>
+          <Route exact path="/about" component={About}></Route>
+        </Switch>
       </div>
       </div>
     )
   }
 } 
+
 export default App;
