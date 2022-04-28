@@ -9,7 +9,8 @@ class App extends React.Component {
     super() 
     this.state = {
      // title: 'Hello from Bridgelabz'
-     userName: ''
+     userName: '',
+     nameError: ''
     }
   }
 
@@ -20,12 +21,14 @@ class App extends React.Component {
     window.open(this.url,"_blank");
   }
 
-   /**
-   * onChange event listener is used to invoke this func
-   * @param {*} event 
-   */
-    onNameChange = (event) => {
+      onNameChange = (event) => {
+      const nameRegex = RegExp('^[A-Z]{1}[a-zA-Z\\s]{2,}$');
       this.setState({ userName: event.target.value})
+      if(nameRegex.test(event.target.value)) {
+        this.setState({nameError: ''})
+      } else {
+        this.setState({nameError: 'Invalid'})
+      }
     }
   
     render() {
@@ -38,6 +41,7 @@ class App extends React.Component {
           </div>
           <div>
             <h1><input onChange={this.onNameChange} /> </h1>
+            <h6><span className='error-output'>{this.state.nameError}</span></h6>
           </div>
         </>
       )
